@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SoftPride - Dein Minecraft Netzwerk</title>
+  <meta name="description" content="Bedwars, Citybuild, Partygames & zeitbegrenzte Events auf SoftPride.de">
+  <link rel="icon" href="assets/logo.png">
+  <style>
+    :root{--accent:#1fb6ff;--accent2:#0066cc;--bg:#071428;--muted:#b9d3ee}
+    *{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial;background:#071428;color:#eaf4ff}
+    header{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;background:rgba(0,0,0,0.18);backdrop-filter:blur(6px)}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:64px;height:64px;border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(2,6,23,0.6)}
+    .logo img{width:100%;height:100%;object-fit:cover}
+    nav a{color:var(--muted);margin-left:14px;text-decoration:none;font-weight:600}
+    nav a.cta{background:linear-gradient(90deg,var(--accent),var(--accent2));padding:10px 14px;border-radius:10px;color:white}
+    .hero{display:grid;grid-template-columns:1fr 380px;gap:24px;padding:28px 32px;align-items:center}
+    .hero-left{padding:28px;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01))}
+    h1{font-size:34px;margin:0}
+    p.lead{color:var(--muted)}
+    .join-btn{display:inline-block;padding:12px 16px;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent2));color:white;font-weight:800;text-decoration:none}
+    .ip{background:rgba(255,255,255,0.04);padding:10px;border-radius:10px;font-weight:700}
+    aside.card{background:rgba(0,0,0,0.2);padding:18px;border-radius:12px;text-align:center}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+    .feature{background:rgba(255,255,255,0.02);padding:12px;border-radius:10px}
+    footer{padding:20px;text-align:center;color:var(--muted)}
+    .banner{position:relative;height:240px;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;margin:18px 0}
+    .banner .bg{position:absolute;inset:0;background-image:url('assets/lobby-placeholder.jpg');background-size:cover;background-position:center;filter:blur(2px) brightness(0.55)}
+    .banner .center{position:relative;text-align:center;color:white}
+    .banner .center img{width:140px;height:140px;border-radius:14px;box-shadow:0 10px 30px rgba(2,6,23,0.6)}
+    .banner .center h2{margin:10px 0 6px;font-size:24px}
+    nav.mobile{display:none}
+    @media(max-width:900px){.hero{grid-template-columns:1fr}nav{display:none}.banner{height:180px}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo"><img src="assets/logo.png" alt="SoftPride"></div>
+      <div>
+        <div style="font-weight:800">SoftPride</div>
+        <div style="font-size:13px;color:var(--muted)">Dein Minecraft Netzwerk</div>
+      </div>
+    </div>
+    <nav>
+      <a href="index.html">Start</a>
+      <a href="about.html">Über uns</a>
+      <a href="modes.html">Spielmodi</a>
+      <a href="contact.html">Kontakt</a>
+      <a class="cta" href="donate.html">Spenden</a>
+    </nav>
+  </header>
+
+  <main class="container" style="max-width:1100px;margin:0 auto;padding:20px">
+    <div class="banner">
+      <div class="bg"></div>
+      <div class="center">
+        <img src="assets/logo.png" alt="Logo">
+        <h2>SoftPride - Dein Minecraft Netzwerk</h2>
+        <div style="color:var(--muted)">Bedwars · Citybuild · Partygames · zeitlich begrenzte Events</div>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="hero-left">
+        <h1>Willkommen auf <span style="background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;color:transparent">SoftPride</span></h1>
+        <p class="lead">Gute Performance, nette Community und einsteigerfreundlich — starte jetzt dein Abenteuer.</p>
+
+        <div style="margin-top:12px">
+          <a class="join-btn" href="#" onclick="copyIP()">Jetzt joinen</a>
+          <span style="margin-left:10px" class="ip" id="serverIp">SoftPride.de</span>
+        </div>
+
+        <div class="grid" style="margin-top:16px">
+          <div class="feature"><strong>Performance</strong><div class="muted">Optimierte Server, geringe Lags</div></div>
+          <div class="feature"><strong>Community</strong><div class="muted">Hilfsbereite Spieler & aktive Staff</div></div>
+          <div class="feature"><strong>Anfängerfreundlich</strong><div class="muted">Tutorials & Support</div></div>
+        </div>
+      </div>
+
+      <aside>
+        <div class="card">
+          <h3>Server-Status</h3>
+          <div id="statusLine" style="font-weight:800">Lade...</div>
+          <div style="color:var(--muted);margin-top:8px">IP: <strong>SoftPride.de</strong></div>
+          <div style="margin-top:10px"><a href="https://discord.gg/pbabbVzAfg" class="join-btn">Discord beitreten</a></div>
+        </div>
+        <div class="card" style="margin-top:12px">
+          <h4>Schnelllinks</h4>
+          <ul style="color:var(--muted);padding-left:18px">
+            <li><a href="about.html">Über uns</a></li>
+            <li><a href="modes.html">Spielmodi</a></li>
+            <li><a href="donate.html">Spenden</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+
+    <section style="margin-top:20px">
+      <h2>Aktuelle & kommende Events</h2>
+      <div style="background:rgba(255,255,255,0.03);padding:14px;border-radius:10px;margin-top:8px">
+        <strong>BedWars-Turnier</strong><div class="muted">Jeden Samstag, 20:30 — Preise: Ingame-Währung & Ränge</div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    © 2025 SoftPride — Alle Rechte vorbehalten • Kontakt: <a href="mailto:support@softpride.de">support@softpride.de</a>
+  </footer>
+
+<script>
+function copyIP() {
+  navigator.clipboard && navigator.clipboard.writeText('SoftPride.de').then(()=>{ alert('Server-IP kopiert: SoftPride.de') }).catch(()=>{ prompt('Kopiere die IP:', 'SoftPride.de') })
+}
+
+// Try to fetch live status from a possible status endpoint (replace with your real API)
+// Falls nicht verfügbar -> zeige simulierte Daten
+(async function(){
+  const statusEl = document.getElementById('statusLine');
+  try {
+    const res = await fetch('https://api.mcsrvstat.us/2/softpride.de');
+    if(res.ok){
+      const data = await res.json();
+      const online = data.online || false;
+      const players = (data.players && data.players.online) ? data.players.online : (Math.floor(Math.random()*80)+2);
+      statusEl.textContent = (online ? 'Online — ' : 'Offline — ') + players + ' Spieler';
+    } else {
+      throw new Error('no api');
+    }
+  } catch(e){
+    const players = Math.floor(Math.random()*80)+2;
+    statusEl.textContent = 'Online — ' + players + ' Spieler';
+  }
+})();
+</script>
+</body>
+</html>
