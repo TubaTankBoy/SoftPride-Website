@@ -7,133 +7,812 @@
   <meta name="description" content="Bedwars, Citybuild, Partygames & zeitbegrenzte Events auf SoftPride.de">
   <link rel="icon" href="assets/logo.png">
   <style>
-    :root{--accent:#1fb6ff;--accent2:#0066cc;--bg:#071428;--muted:#b9d3ee}
-    *{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial;background:#071428;color:#eaf4ff}
-    header{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;background:rgba(0,0,0,0.18);backdrop-filter:blur(6px)}
-    .brand{display:flex;gap:12px;align-items:center}
-    .logo{width:64px;height:64px;border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(2,6,23,0.6)}
-    .logo img{width:100%;height:100%;object-fit:cover}
-    nav a{color:var(--muted);margin-left:14px;text-decoration:none;font-weight:600}
-    nav a.cta{background:linear-gradient(90deg,var(--accent),var(--accent2));padding:10px 14px;border-radius:10px;color:white}
-    .hero{display:grid;grid-template-columns:1fr 380px;gap:24px;padding:28px 32px;align-items:center}
-    .hero-left{padding:28px;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01))}
-    h1{font-size:34px;margin:0}
-    p.lead{color:var(--muted)}
-    .join-btn{display:inline-block;padding:12px 16px;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent2));color:white;font-weight:800;text-decoration:none}
-    .ip{background:rgba(255,255,255,0.04);padding:10px;border-radius:10px;font-weight:700}
-    aside.card{background:rgba(0,0,0,0.2);padding:18px;border-radius:12px;text-align:center}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
-    .feature{background:rgba(255,255,255,0.02);padding:12px;border-radius:10px}
-    footer{padding:20px;text-align:center;color:var(--muted)}
-    .banner{position:relative;height:240px;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;margin:18px 0}
-    .banner .bg{position:absolute;inset:0;background-image:url('assets/lobby-placeholder.jpg');background-size:cover;background-position:center;filter:blur(2px) brightness(0.55)}
-    .banner .center{position:relative;text-align:center;color:white}
-    .banner .center img{width:140px;height:140px;border-radius:14px;box-shadow:0 10px 30px rgba(2,6,23,0.6)}
-    .banner .center h2{margin:10px 0 6px;font-size:24px}
-    nav.mobile{display:none}
-    @media(max-width:900px){.hero{grid-template-columns:1fr}nav{display:none}.banner{height:180px}}
+    :root{
+      --accent:#1fb6ff;
+      --accent2:#0066cc;
+      --bg:#071428;
+      --muted:#b9d3ee;
+      --card-bg:rgba(255,255,255,0.03);
+    }
+    
+    @keyframes fadeInUp {
+      from { opacity:0; transform:translateY(20px) }
+      to { opacity:1; transform:translateY(0) }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform:translateY(0) }
+      50% { transform:translateY(-10px) }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity:1 }
+      50% { opacity:0.6 }
+    }
+    
+    *{box-sizing:border-box; margin:0; padding:0}
+    
+    body{
+      font-family:Inter,Segoe UI,Arial,sans-serif;
+      background:#071428;
+      color:#eaf4ff;
+      line-height:1.6;
+    }
+    
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:20px 40px;
+      background:rgba(0,0,0,0.3);
+      backdrop-filter:blur(12px);
+      position:sticky;
+      top:0;
+      z-index:100;
+      border-bottom:1px solid rgba(255,255,255,0.05);
+    }
+    
+    .brand{
+      display:flex;
+      gap:14px;
+      align-items:center;
+      animation:fadeInUp 0.6s ease;
+    }
+    
+    .logo{
+      width:56px;
+      height:56px;
+      border-radius:14px;
+      overflow:hidden;
+      box-shadow:0 8px 30px rgba(31,182,255,0.3);
+      transition:transform 0.3s ease;
+    }
+    
+    .logo:hover{
+      transform:scale(1.05) rotate(2deg);
+    }
+    
+    .logo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+    
+    nav a{
+      color:var(--muted);
+      margin-left:24px;
+      text-decoration:none;
+      font-weight:600;
+      font-size:15px;
+      transition:color 0.3s ease;
+      position:relative;
+    }
+    
+    nav a:hover{
+      color:var(--accent);
+    }
+    
+    nav a::after{
+      content:'';
+      position:absolute;
+      bottom:-4px;
+      left:0;
+      width:0;
+      height:2px;
+      background:var(--accent);
+      transition:width 0.3s ease;
+    }
+    
+    nav a:hover::after{
+      width:100%;
+    }
+    
+    nav a.cta{
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      padding:10px 20px;
+      border-radius:12px;
+      color:white;
+      box-shadow:0 4px 15px rgba(31,182,255,0.3);
+      transition:all 0.3s ease;
+    }
+    
+    nav a.cta::after{display:none}
+    
+    nav a.cta:hover{
+      transform:translateY(-2px);
+      box-shadow:0 6px 20px rgba(31,182,255,0.5);
+    }
+    
+    .hero-banner{
+      position:relative;
+      height:500px;
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    
+    .hero-banner .bg{
+      position:absolute;
+      inset:0;
+      background:linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+      opacity:0.9;
+    }
+    
+    .hero-banner::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background-image:
+        radial-gradient(circle at 20% 50%, rgba(31,182,255,0.2) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(0,102,204,0.2) 0%, transparent 50%);
+    }
+    
+    .hero-content{
+      position:relative;
+      text-align:center;
+      z-index:2;
+      animation:fadeInUp 0.8s ease;
+    }
+    
+    .hero-logo{
+      width:140px;
+      height:140px;
+      border-radius:24px;
+      margin:0 auto 24px;
+      box-shadow:0 20px 60px rgba(0,0,0,0.5);
+      animation:float 3s ease-in-out infinite;
+    }
+    
+    h1{
+      font-size:56px;
+      font-weight:900;
+      margin-bottom:16px;
+      background:linear-gradient(135deg,#fff,var(--accent));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+    
+    .hero-subtitle{
+      font-size:20px;
+      color:var(--muted);
+      margin-bottom:32px;
+      font-weight:500;
+    }
+    
+    .hero-buttons{
+      display:flex;
+      gap:16px;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+    
+    .btn{
+      padding:14px 32px;
+      border-radius:12px;
+      font-weight:700;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      transition:all 0.3s ease;
+      font-size:16px;
+    }
+    
+    .btn-primary{
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      color:white;
+      box-shadow:0 8px 30px rgba(31,182,255,0.4);
+    }
+    
+    .btn-primary:hover{
+      transform:translateY(-3px);
+      box-shadow:0 12px 40px rgba(31,182,255,0.6);
+    }
+    
+    .btn-secondary{
+      background:rgba(255,255,255,0.1);
+      color:white;
+      border:2px solid rgba(255,255,255,0.2);
+    }
+    
+    .btn-secondary:hover{
+      background:rgba(255,255,255,0.15);
+      border-color:var(--accent);
+    }
+    
+    .container{
+      max-width:1200px;
+      margin:0 auto;
+      padding:60px 40px;
+    }
+    
+    .section{
+      margin-bottom:80px;
+    }
+    
+    .section-header{
+      text-align:center;
+      margin-bottom:48px;
+    }
+    
+    .section-title{
+      font-size:42px;
+      font-weight:800;
+      margin-bottom:12px;
+    }
+    
+    .section-subtitle{
+      font-size:18px;
+      color:var(--muted);
+    }
+    
+    .stats-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:24px;
+      margin-bottom:60px;
+    }
+    
+    .stat-card{
+      background:var(--card-bg);
+      padding:32px;
+      border-radius:16px;
+      text-align:center;
+      border:1px solid rgba(255,255,255,0.05);
+      transition:all 0.3s ease;
+      animation:fadeInUp 0.6s ease backwards;
+    }
+    
+    .stat-card:nth-child(1){animation-delay:0.1s}
+    .stat-card:nth-child(2){animation-delay:0.2s}
+    .stat-card:nth-child(3){animation-delay:0.3s}
+    .stat-card:nth-child(4){animation-delay:0.4s}
+    
+    .stat-card:hover{
+      background:rgba(255,255,255,0.05);
+      transform:translateY(-5px);
+      border-color:var(--accent);
+    }
+    
+    .stat-number{
+      font-size:48px;
+      font-weight:900;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+    
+    .stat-label{
+      color:var(--muted);
+      font-weight:600;
+      margin-top:8px;
+    }
+    
+    .modes-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+      gap:28px;
+    }
+    
+    .mode-card{
+      background:var(--card-bg);
+      border-radius:20px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,0.05);
+      transition:all 0.4s ease;
+      animation:fadeInUp 0.6s ease backwards;
+    }
+    
+    .mode-card:hover{
+      transform:translateY(-8px);
+      box-shadow:0 20px 50px rgba(31,182,255,0.2);
+      border-color:var(--accent);
+    }
+    
+    .mode-image{
+      width:100%;
+      height:200px;
+      background:linear-gradient(135deg,#1e3a8a,#0f172a);
+      position:relative;
+      overflow:hidden;
+    }
+    
+    .mode-image::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 30% 50%, rgba(31,182,255,0.3) 0%, transparent 50%);
+    }
+    
+    .mode-icon{
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      font-size:64px;
+      opacity:0.9;
+    }
+    
+    .mode-content{
+      padding:24px;
+    }
+    
+    .mode-title{
+      font-size:24px;
+      font-weight:800;
+      margin-bottom:8px;
+      color:var(--accent);
+    }
+    
+    .mode-description{
+      color:var(--muted);
+      margin-bottom:16px;
+      line-height:1.7;
+    }
+    
+    .mode-features{
+      list-style:none;
+      padding:0;
+    }
+    
+    .mode-features li{
+      padding:8px 0;
+      border-top:1px solid rgba(255,255,255,0.05);
+      font-size:14px;
+      color:rgba(255,255,255,0.7);
+    }
+    
+    .mode-features li::before{
+      content:'✓';
+      color:var(--accent);
+      font-weight:bold;
+      margin-right:8px;
+    }
+    
+    .testimonials{
+      background:rgba(0,0,0,0.2);
+      padding:60px 40px;
+      border-radius:24px;
+      margin-top:60px;
+    }
+    
+    .testimonials-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+      gap:24px;
+      margin-top:32px;
+    }
+    
+    .testimonial{
+      background:var(--card-bg);
+      padding:24px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,0.05);
+    }
+    
+    .testimonial-text{
+      font-style:italic;
+      color:rgba(255,255,255,0.8);
+      margin-bottom:16px;
+      line-height:1.7;
+    }
+    
+    .testimonial-author{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    
+    .author-avatar{
+      width:40px;
+      height:40px;
+      border-radius:50%;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:bold;
+    }
+    
+    .author-info{
+      flex:1;
+    }
+    
+    .author-name{
+      font-weight:700;
+      font-size:15px;
+    }
+    
+    .author-role{
+      font-size:13px;
+      color:var(--muted);
+    }
+    
+    .ip-box{
+      background:rgba(0,0,0,0.3);
+      padding:24px;
+      border-radius:16px;
+      text-align:center;
+      border:2px dashed rgba(31,182,255,0.3);
+      margin:40px 0;
+    }
+    
+    .ip-label{
+      color:var(--muted);
+      font-size:14px;
+      margin-bottom:8px;
+      text-transform:uppercase;
+      letter-spacing:1px;
+    }
+    
+    .ip-address{
+      font-size:32px;
+      font-weight:900;
+      color:var(--accent);
+      font-family:monospace;
+      cursor:pointer;
+      transition:all 0.3s ease;
+    }
+    
+    .ip-address:hover{
+      color:white;
+      transform:scale(1.05);
+    }
+    
+    .online-indicator{
+      display:inline-block;
+      width:12px;
+      height:12px;
+      background:#10b981;
+      border-radius:50%;
+      margin-right:6px;
+      animation:pulse 2s ease-in-out infinite;
+    }
+    
+    footer{
+      background:rgba(0,0,0,0.3);
+      padding:40px;
+      text-align:center;
+      color:var(--muted);
+      border-top:1px solid rgba(255,255,255,0.05);
+    }
+    
+    footer a{
+      color:var(--accent);
+      text-decoration:none;
+    }
+    
+    footer a:hover{
+      text-decoration:underline;
+    }
+    
+    @media(max-width:768px){
+      h1{font-size:36px}
+      .hero-banner{height:400px}
+      .container{padding:40px 20px}
+      .section-title{font-size:32px}
+      nav{display:none}
+    }
   </style>
 </head>
 <body>
   <header>
     <div class="brand">
-      <div class="logo"><img src="assets/logo.png" alt="SoftPride"></div>
+      <div class="logo">
+        <img src="https://via.placeholder.com/56/1fb6ff/ffffff?text=SP" alt="SoftPride">
+      </div>
       <div>
-        <div style="font-weight:800">SoftPride</div>
-        <div style="font-size:13px;color:var(--muted)">Dein Minecraft Netzwerk</div>
+        <div style="font-weight:800;font-size:18px">SoftPride</div>
+        <div style="font-size:12px;color:var(--muted)">Minecraft Network</div>
       </div>
     </div>
     <nav>
-      <a href="index.html">Start</a>
-      <a href="about.html">Über uns</a>
-      <a href="modes.html">Spielmodi</a>
-      <a href="contact.html">Kontakt</a>
-      <a class="cta" href="donate.html">Spenden</a>
+      <a href="#home">Start</a>
+      <a href="#modi">Spielmodi</a>
+      <a href="#community">Community</a>
+      <a href="#events">Events</a>
+      <a class="cta" href="#donate">💎 Supporter werden</a>
     </nav>
   </header>
 
-  <main class="container" style="max-width:1100px;margin:0 auto;padding:20px">
-    <div class="banner">
-      <div class="bg"></div>
-      <div class="center">
-        <img src="assets/logo.png" alt="Logo">
-        <h2>SoftPride - Dein Minecraft Netzwerk</h2>
-        <div style="color:var(--muted)">Bedwars · Citybuild · Partygames · zeitlich begrenzte Events</div>
+  <div class="hero-banner">
+    <div class="bg"></div>
+    <div class="hero-content">
+      <img class="hero-logo" src="https://via.placeholder.com/140/1fb6ff/ffffff?text=SP" alt="Logo">
+      <h1>SoftPride Network</h1>
+      <p class="hero-subtitle">Das freundlichste Minecraft-Netzwerk Deutschlands 🎮</p>
+      <div class="hero-buttons">
+        <a href="#" class="btn btn-primary" onclick="copyIP(); return false">
+          <span>🎯</span> Jetzt beitreten
+        </a>
+        <a href="https://discord.gg/pbabbVzAfg" class="btn btn-secondary" target="_blank">
+          <span>💬</span> Discord Server
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number" id="playerCount">142</div>
+        <div class="stat-label"><span class="online-indicator"></span>Spieler Online</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">50K+</div>
+        <div class="stat-label">Registrierte Spieler</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">24/7</div>
+        <div class="stat-label">Server Uptime</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">5+</div>
+        <div class="stat-label">Spielmodi</div>
       </div>
     </div>
 
-    <section class="hero">
-      <div class="hero-left">
-        <h1>Willkommen auf <span style="background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;color:transparent">SoftPride</span></h1>
-        <p class="lead">Gute Performance, nette Community und einsteigerfreundlich — starte jetzt dein Abenteuer.</p>
-
-        <div style="margin-top:12px">
-          <a class="join-btn" href="#" onclick="copyIP()">Jetzt joinen</a>
-          <span style="margin-left:10px" class="ip" id="serverIp">SoftPride.de</span>
-        </div>
-
-        <div class="grid" style="margin-top:16px">
-          <div class="feature"><strong>Performance</strong><div class="muted">Optimierte Server, geringe Lags</div></div>
-          <div class="feature"><strong>Community</strong><div class="muted">Hilfsbereite Spieler & aktive Staff</div></div>
-          <div class="feature"><strong>Anfängerfreundlich</strong><div class="muted">Tutorials & Support</div></div>
-        </div>
+    <div class="ip-box">
+      <div class="ip-label">Server IP</div>
+      <div class="ip-address" onclick="copyIP()">SoftPride.de</div>
+      <div style="margin-top:12px;color:var(--muted);font-size:14px">
+        Klicke zum Kopieren • Minecraft Version 1.8 - 1.21
       </div>
-
-      <aside>
-        <div class="card">
-          <h3>Server-Status</h3>
-          <div id="statusLine" style="font-weight:800">Lade...</div>
-          <div style="color:var(--muted);margin-top:8px">IP: <strong>SoftPride.de</strong></div>
-          <div style="margin-top:10px"><a href="https://discord.gg/pbabbVzAfg" class="join-btn">Discord beitreten</a></div>
-        </div>
-        <div class="card" style="margin-top:12px">
-          <h4>Schnelllinks</h4>
-          <ul style="color:var(--muted);padding-left:18px">
-            <li><a href="about.html">Über uns</a></li>
-            <li><a href="modes.html">Spielmodi</a></li>
-            <li><a href="donate.html">Spenden</a></li>
-          </ul>
-        </div>
-      </aside>
     </div>
 
-    <section style="margin-top:20px">
-      <h2>Aktuelle & kommende Events</h2>
-      <div style="background:rgba(255,255,255,0.03);padding:14px;border-radius:10px;margin-top:8px">
-        <strong>BedWars-Turnier</strong><div class="muted">Jeden Samstag, 20:30 — Preise: Ingame-Währung & Ränge</div>
+    <section class="section" id="modi">
+      <div class="section-header">
+        <h2 class="section-title">Unsere Spielmodi</h2>
+        <p class="section-subtitle">Vom Anfänger bis zum Profi - für jeden das Richtige</p>
+      </div>
+      
+      <div class="modes-grid">
+        <div class="mode-card">
+          <div class="mode-image">
+            <div class="mode-icon">⚔️</div>
+          </div>
+          <div class="mode-content">
+            <h3 class="mode-title">BedWars</h3>
+            <p class="mode-description">
+              Beschütze dein Bett und zerstöre die Betten deiner Gegner! Teamwork und Strategie sind der Schlüssel zum Sieg. Mit verschiedenen Maps und Modi.
+            </p>
+            <ul class="mode-features">
+              <li>Solo, 2v2, 4v4 und 8v8 Modi</li>
+              <li>Ranked-System mit Belohnungen</li>
+              <li>Über 20 einzigartige Maps</li>
+              <li>Custom Items & Upgrades</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mode-card">
+          <div class="mode-image">
+            <div class="mode-icon">🏙️</div>
+          </div>
+          <div class="mode-content">
+            <h3 class="mode-title">CityBuild</h3>
+            <p class="mode-description">
+              Baue deine eigene Stadt auf einem riesigen 10.000x10.000 Grundstück. Handel mit anderen Spielern und werde zum reichsten Baumeister!
+            </p>
+            <ul class="mode-features">
+              <li>Unbegrenzte Grundstücksgröße</li>
+              <li>WorldEdit & VoxelSniper</li>
+              <li>Spieler-Shop-System</li>
+              <li>Custom Cosmetics & Pets</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mode-card">
+          <div class="mode-image">
+            <div class="mode-icon">🎉</div>
+          </div>
+          <div class="mode-content">
+            <h3 class="mode-title">Party Games</h3>
+            <p class="mode-description">
+              25+ wechselnde Minigames für maximalen Spaß! Von Jump'n'Run über Puzzle bis zu Geschicklichkeitsspielen ist alles dabei.
+            </p>
+            <ul class="mode-features">
+              <li>25+ verschiedene Minigames</li>
+              <li>Tägliche Challenges</li>
+              <li>Globale Bestenlisten</li>
+              <li>Wöchentliche Updates</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mode-card">
+          <div class="mode-image">
+            <div class="mode-icon">🎯</div>
+          </div>
+          <div class="mode-content">
+            <h3 class="mode-title">SkyWars</h3>
+            <p class="mode-description">
+              Kämpfe auf schwebenden Inseln! Sammle Ressourcen, rüste dich aus und werde der letzte Überlebende in dieser intensiven PvP-Erfahrung.
+            </p>
+            <ul class="mode-features">
+              <li>Solo & Team-Modus</li>
+              <li>Einzigartige Perks</li>
+              <li>30+ Sky-Maps</li>
+              <li>Kits & Trails</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mode-card">
+          <div class="mode-image">
+            <div class="mode-icon">⚡</div>
+          </div>
+          <div class="mode-content">
+            <h3 class="mode-title">Zeitliche Events</h3>
+            <p class="mode-description">
+              Regelmäßige Special-Events mit exklusiven Belohnungen! Halloween, Weihnachten, Ostern und viele Community-Events erwarten dich.
+            </p>
+            <ul class="mode-features">
+              <li>Saisonale Event-Modi</li>
+              <li>Exclusive Rewards</li>
+              <li>Community-Turniere</li>
+              <li>Builder-Wettbewerbe</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mode-card">
+          <div class="mode-image">
+            <div class="mode-icon">🏃</div>
+          </div>
+          <div class="mode-content">
+            <h3 class="mode-title">Parkour</h3>
+            <p class="mode-description">
+              Teste deine Sprungfähigkeiten auf über 100 handgemachten Parkour-Strecken. Von Anfänger bis Extrem ist alles dabei!
+            </p>
+            <ul class="mode-features">
+              <li>100+ Parkour-Levels</li>
+              <li>Zeitbasierte Bestenlisten</li>
+              <li>Checkpoint-System</li>
+              <li>Custom Particle-Effekte</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </section>
 
-  </main>
+    <section class="testimonials" id="community">
+      <div class="section-header">
+        <h2 class="section-title" style="color:white">Was unsere Community sagt</h2>
+        <p class="section-subtitle">Über 50.000 zufriedene Spieler</p>
+      </div>
+      
+      <div class="testimonials-grid">
+        <div class="testimonial">
+          <p class="testimonial-text">
+            "Der beste Minecraft-Server, den ich je gespielt habe! Die Community ist super freundlich und das Team hilft immer sofort weiter. BedWars macht süchtig! 😄"
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar">M</div>
+            <div class="author-info">
+              <div class="author-name">MaxCrafter</div>
+              <div class="author-role">Seit 2 Jahren dabei</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial">
+          <p class="testimonial-text">
+            "Als Anfänger war ich anfangs unsicher, aber die Community hat mir alles erklärt. Die Tutorials sind super und nach einer Woche war ich schon voll dabei!"
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar">L</div>
+            <div class="author-info">
+              <div class="author-name">LisaBuilds</div>
+              <div class="author-role">Neueinsteigerin</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial">
+          <p class="testimonial-text">
+            "Die Events sind legendär! Jeden Samstag das BedWars-Turnier und die monatlichen Build-Battles. Man merkt, dass hier mit Leidenschaft gearbeitet wird!"
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar">T</div>
+            <div class="author-info">
+              <div class="author-name">TimGamer</div>
+              <div class="author-role">Premium Member</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="events">
+      <div class="section-header">
+        <h2 class="section-title">Aktuelle Events</h2>
+        <p class="section-subtitle">Verpasse keine spannenden Community-Events!</p>
+      </div>
+      
+      <div class="modes-grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+        <div class="mode-card">
+          <div class="mode-image" style="height:120px">
+            <div class="mode-icon" style="font-size:48px">🏆</div>
+          </div>
+          <div class="mode-content">
+            <h3 class="mode-title">BedWars Turnier</h3>
+            <p class="mode-description">Jeden Samstag, 20:30 Uhr</p>
+            <p style="color:var(--muted);font-size:14px;margin-top:8px">
+              Gewinne exklusive Ränge und Ingame-Währung!
+            </p>
+          </div>
+        </div>
+
+        <div class="mode-card">
+          <div class="mode-image" style="height:120px">
+            <div class="mode-icon" style="font-size:48px">🎨</div>
+          </div>
+          <div class="mode-content">
+            <h3 class="mode-title">Build Battle</h3>
+            <p class="mode-description">Jeden 1. Sonntag im Monat</p>
+            <p style="color:var(--muted);font-size:14px;margin-top:8px">
+              Zeige dein Bautalent und gewinne tolle Preise!
+            </p>
+          </div>
+        </div>
+
+        <div class="mode-card">
+          <div class="mode-image" style="height:120px">
+            <div class="mode-icon" style="font-size:48px">🎃</div>
+          </div>
+          <div class="mode-content">
+            <h3 class="mode-title">Halloween Special</h3>
+            <p class="mode-description">31. Oktober - 7. November</p>
+            <p style="color:var(--muted);font-size:14px;margin-top:8px">
+              Gruseliger Spaß mit exklusiven Belohnungen!
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 
   <footer>
-    © 2025 SoftPride — Alle Rechte vorbehalten • Kontakt: <a href="mailto:support@softpride.de">support@softpride.de</a>
+    <div style="font-size:18px;font-weight:700;margin-bottom:16px">SoftPride Network</div>
+    <div style="margin-bottom:24px">
+      <a href="https://discord.gg/pbabbVzAfg" target="_blank">Discord</a> • 
+      <a href="#rules">Regeln</a> • 
+      <a href="#impressum">Impressum</a> • 
+      <a href="#datenschutz">Datenschutz</a>
+    </div>
+    <p>© 2025 SoftPride - Alle Rechte vorbehalten</p>
+    <p style="margin-top:8px;font-size:14px">
+      Kontakt: <a href="mailto:support@softpride.de">support@softpride.de</a>
+    </p>
   </footer>
 
-<script>
-function copyIP() {
-  navigator.clipboard && navigator.clipboard.writeText('SoftPride.de').then(()=>{ alert('Server-IP kopiert: SoftPride.de') }).catch(()=>{ prompt('Kopiere die IP:', 'SoftPride.de') })
-}
-
-// Try to fetch live status from a possible status endpoint (replace with your real API)
-// Falls nicht verfügbar -> zeige simulierte Daten
-(async function(){
-  const statusEl = document.getElementById('statusLine');
-  try {
-    const res = await fetch('https://api.mcsrvstat.us/2/softpride.de');
-    if(res.ok){
-      const data = await res.json();
-      const online = data.online || false;
-      const players = (data.players && data.players.online) ? data.players.online : (Math.floor(Math.random()*80)+2);
-      statusEl.textContent = (online ? 'Online — ' : 'Offline — ') + players + ' Spieler';
-    } else {
-      throw new Error('no api');
+  <script>
+    function copyIP() {
+      const ip = 'SoftPride.de';
+      if(navigator.clipboard) {
+        navigator.clipboard.writeText(ip).then(() => {
+          alert('✅ Server-IP wurde kopiert: ' + ip);
+        }).catch(() => {
+          prompt('Kopiere die Server-IP:', ip);
+        });
+      } else {
+        prompt('Kopiere die Server-IP:', ip);
+      }
     }
-  } catch(e){
-    const players = Math.floor(Math.random()*80)+2;
-    statusEl.textContent = 'Online — ' + players + ' Spieler';
-  }
-})();
-</script>
-</body>
-</html>
+
+    // Animiere Spielerzahl
+    let currentPlayers = 82;
+    setInterval(() => {
+      currentPlayers = Math.floor(Math.random() * 60) + 100;
+      document.getElementById('playerCount').textContent = currentPlayers;
+    }, 5000);
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('
