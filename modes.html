@@ -1,27 +1,651 @@
 <!doctype html>
-<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Spielmodi - SoftPride</title>
-<link rel="icon" href="assets/logo.png">
-<style>body{font-family:Inter,Segoe UI,Arial;background:#071428;color:#eaf4ff;margin:0;padding:20px}a{color:#9fd8ff}header{padding:10px 0}</style>
-</head><body>
-<header><a href="index.html">← Zurück</a></header>
-<main style="max-width:900px;margin:0 auto">
-  <h1>Spielmodi</h1>
-  <section>
-    <h2>BedWars</h2>
-    <p>Teams kämpfen darum, die Betten der Gegner zu zerstören. Ranglisten, Belohnungen und regelmäßige Turniere.</p>
-  </section>
-  <section>
-    <h2>Citybuild</h2>
-    <p>Baue deine Traumstadt, handle mit anderen Spielern und nimm an Community-Bauprojekten teil.</p>
-  </section>
-  <section>
-    <h2>PartyGames</h2>
-    <p>Kurzweilige Runden mit unterschiedlichen Minispielen, perfekt für zwischendurch mit kosmetischen Belohnungen.</p>
-  </section>
-  <section>
-    <h2>Events</h2>
-    <p>Zeitlich begrenzte Events wie Turniere, Giveaways und Community-Herausforderungen.</p>
-  </section>
-</main>
-</body></html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Spielmodis - SoftPride</title>
+  <link rel="icon" href="assets/logo.png">
+  <style>
+    :root{
+      --accent:#1fb6ff;
+      --accent2:#0066cc;
+      --bg:#071428;
+      --muted:#b9d3ee;
+      --card-bg:rgba(255,255,255,0.03);
+    }
+    
+    @keyframes fadeInUp {
+      from { opacity:0; transform:translateY(30px) }
+      to { opacity:1; transform:translateY(0) }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform:translateY(0) }
+      50% { transform:translateY(-10px) }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform:scale(1) }
+      50% { transform:scale(1.05) }
+    }
+    
+    * {
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+    
+    body {
+      font-family:Inter,Segoe UI,Arial,sans-serif;
+      background:#071428;
+      color:#eaf4ff;
+      line-height:1.6;
+    }
+    
+    header {
+      background:rgba(0,0,0,0.3);
+      backdrop-filter:blur(12px);
+      padding:20px 40px;
+      border-bottom:1px solid rgba(255,255,255,0.05);
+      position:sticky;
+      top:0;
+      z-index:100;
+    }
+    
+    .back-link {
+      color:var(--accent);
+      text-decoration:none;
+      font-weight:600;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      transition:all 0.3s ease;
+    }
+    
+    .back-link:hover {
+      transform:translateX(-5px);
+      color:white;
+    }
+    
+    .hero {
+      background:linear-gradient(135deg, rgba(31,182,255,0.15) 0%, rgba(0,102,204,0.1) 100%);
+      padding:80px 40px;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+    
+    .hero::before {
+      content:'';
+      position:absolute;
+      inset:0;
+      background-image:
+        radial-gradient(circle at 30% 40%, rgba(31,182,255,0.2) 0%, transparent 50%),
+        radial-gradient(circle at 70% 70%, rgba(0,102,204,0.2) 0%, transparent 50%);
+    }
+    
+    .hero-content {
+      position:relative;
+      max-width:800px;
+      margin:0 auto;
+      animation:fadeInUp 0.8s ease;
+    }
+    
+    h1 {
+      font-size:56px;
+      font-weight:900;
+      margin-bottom:16px;
+      background:linear-gradient(135deg,#fff,var(--accent));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+    
+    .hero-subtitle {
+      font-size:20px;
+      color:var(--muted);
+      max-width:600px;
+      margin:0 auto;
+    }
+    
+    .container {
+      max-width:1200px;
+      margin:0 auto;
+      padding:60px 40px;
+    }
+    
+    .mode-section {
+      margin-bottom:100px;
+      animation:fadeInUp 0.8s ease backwards;
+    }
+    
+    .mode-section:nth-child(1) { animation-delay:0.1s }
+    .mode-section:nth-child(2) { animation-delay:0.2s }
+    .mode-section:nth-child(3) { animation-delay:0.3s }
+    .mode-section:nth-child(4) { animation-delay:0.4s }
+    
+    .mode-card {
+      background:var(--card-bg);
+      border-radius:24px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,0.05);
+      transition:all 0.4s ease;
+    }
+    
+    .mode-card:hover {
+      transform:translateY(-8px);
+      border-color:var(--accent);
+      box-shadow:0 20px 60px rgba(31,182,255,0.2);
+    }
+    
+    .mode-header {
+      position:relative;
+      height:350px;
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    
+    .mode-bg {
+      position:absolute;
+      inset:0;
+      background:linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+    }
+    
+    .mode-bg::before {
+      content:'';
+      position:absolute;
+      inset:0;
+      background-image:
+        radial-gradient(circle at 30% 50%, rgba(31,182,255,0.3) 0%, transparent 60%),
+        radial-gradient(circle at 70% 50%, rgba(0,102,204,0.2) 0%, transparent 60%);
+    }
+    
+    .mode-icon-large {
+      position:relative;
+      font-size:120px;
+      animation:float 3s ease-in-out infinite;
+      filter:drop-shadow(0 10px 30px rgba(0,0,0,0.5));
+    }
+    
+    .mode-content {
+      padding:40px;
+    }
+    
+    .mode-title {
+      font-size:42px;
+      font-weight:900;
+      margin-bottom:16px;
+      background:linear-gradient(135deg,var(--accent),white);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+    
+    .mode-description {
+      font-size:18px;
+      color:var(--muted);
+      margin-bottom:32px;
+      line-height:1.8;
+    }
+    
+    .features-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:20px;
+      margin-bottom:32px;
+    }
+    
+    .feature-item {
+      background:rgba(255,255,255,0.02);
+      padding:20px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.05);
+      transition:all 0.3s ease;
+    }
+    
+    .feature-item:hover {
+      background:rgba(255,255,255,0.05);
+      border-color:var(--accent);
+      transform:translateX(5px);
+    }
+    
+    .feature-icon {
+      font-size:32px;
+      margin-bottom:12px;
+    }
+    
+    .feature-title {
+      font-weight:700;
+      font-size:16px;
+      color:white;
+      margin-bottom:8px;
+    }
+    
+    .feature-text {
+      font-size:14px;
+      color:var(--muted);
+      line-height:1.6;
+    }
+    
+    .highlight-box {
+      background:linear-gradient(135deg, rgba(31,182,255,0.15), rgba(0,102,204,0.1));
+      border:2px solid rgba(31,182,255,0.3);
+      border-radius:16px;
+      padding:24px;
+      margin-top:24px;
+    }
+    
+    .highlight-title {
+      font-weight:700;
+      font-size:18px;
+      color:var(--accent);
+      margin-bottom:8px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    
+    .highlight-text {
+      color:rgba(255,255,255,0.9);
+      line-height:1.7;
+    }
+    
+    .stats-row {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+      gap:20px;
+      margin-top:24px;
+    }
+    
+    .stat-box {
+      text-align:center;
+      padding:20px;
+      background:rgba(0,0,0,0.2);
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.05);
+    }
+    
+    .stat-number {
+      font-size:36px;
+      font-weight:900;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+    
+    .stat-label {
+      font-size:14px;
+      color:var(--muted);
+      margin-top:4px;
+    }
+    
+    .cta-box {
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      border-radius:24px;
+      padding:60px 40px;
+      text-align:center;
+      margin-top:60px;
+    }
+    
+    .cta-title {
+      font-size:36px;
+      font-weight:900;
+      margin-bottom:16px;
+      color:white;
+    }
+    
+    .cta-text {
+      font-size:18px;
+      margin-bottom:32px;
+      opacity:0.95;
+      max-width:600px;
+      margin-left:auto;
+      margin-right:auto;
+    }
+    
+    .btn-group {
+      display:flex;
+      gap:16px;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+    
+    .btn {
+      padding:16px 36px;
+      border-radius:12px;
+      text-decoration:none;
+      font-weight:700;
+      font-size:16px;
+      transition:all 0.3s ease;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    
+    .btn-primary {
+      background:white;
+      color:var(--accent2);
+    }
+    
+    .btn-primary:hover {
+      transform:translateY(-3px);
+      box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    }
+    
+    .btn-secondary {
+      background:rgba(255,255,255,0.2);
+      color:white;
+      border:2px solid white;
+    }
+    
+    .btn-secondary:hover {
+      background:rgba(255,255,255,0.3);
+      transform:translateY(-3px);
+    }
+    
+    @media(max-width:768px) {
+      h1 { font-size:36px }
+      .hero { padding:60px 20px }
+      .container { padding:40px 20px }
+      .mode-title { font-size:32px }
+      .mode-header { height:250px }
+      .mode-icon-large { font-size:80px }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="back-link">
+      <span>←</span> Zurück zur Startseite
+    </a>
+  </header>
+
+  <div class="hero">
+    <div class="hero-content">
+      <h1>Spielmodi</h1>
+      <p class="hero-subtitle">
+        Entdecke unsere vielfältigen Spielmodi und finde dein nächstes Minecraft-Abenteuer
+      </p>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- BedWars -->
+    <div class="mode-section">
+      <div class="mode-card">
+        <div class="mode-header">
+          <div class="mode-bg"></div>
+          <div class="mode-icon-large">⚔️</div>
+        </div>
+        <div class="mode-content">
+          <h2 class="mode-title">BedWars 1vs1</h2>
+          <p class="mode-description">
+            Fordere andere Spieler im direkten 1 gegen 1 Duell heraus! Zeige deine Skills im PvP, beschütze dein Bett und zerstöre das Bett deines Gegners. Schnelle, intensive Matches für echte Wettkämpfer.
+          </p>
+          
+          <div class="features-grid">
+            <div class="feature-item">
+              <div class="feature-icon">🎯</div>
+              <div class="feature-title">Direktes PvP</div>
+              <div class="feature-text">1vs1 Kämpfe ohne Ablenkung - nur du gegen deinen Gegner</div>
+            </div>
+            
+            <div class="feature-item">
+              <div class="feature-icon">🗺️</div>
+              <div class="feature-title">Verschiedene Maps</div>
+              <div class="feature-text">Wechselnde Arenen für abwechslungsreiche Duelle</div>
+            </div>
+            
+            <div class="feature-item">
+              <div class="feature-icon">📊</div>
+              <div class="feature-title">Ranking-System</div>
+              <div class="feature-text">Klettere die Rangliste hoch und zeig allen deine Skills</div>
+            </div>
+            
+            <div class="feature-item">
+              <div class="feature-icon">⚡</div>
+              <div class="feature-title">Schnelle Matches</div>
+              <div class="feature-text">Kurze, actionreiche Runden - perfekt für zwischendurch</div>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <div class="highlight-title">
+              <span>🏆</span> Wöchentliche Turniere
+            </div>
+            <div class="highlight-text">
+              Zestöre die Betten deiner Gegener!
+            </div>
+          </div>
+
+          <div class="stats-row">
+            <div class="stat-box">
+              <div class="stat-number">∞</div>
+              <div class="stat-label">Unlimited Matches</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-number">1+</div>
+              <div class="stat-label">Maps</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-number">24/7</div>
+              <div class="stat-label">Verfügbar</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CityBuild -->
+    <div class="mode-section">
+      <div class="mode-card">
+        <div class="mode-header">
+          <div class="mode-bg"></div>
+          <div class="mode-icon-large">🏙️</div>
+        </div>
+        <div class="mode-content">
+          <h2 class="mode-title">CityBuild</h2>
+          <p class="mode-description">
+            Erschaffe deine eigene Stadt auf deinem persönlichen Grundstück! Lass deiner Kreativität freien Lauf, handle mit anderen Spielern und werde Teil einer lebendigen Wirtschaft. Deine Stadt, deine Regeln!
+          </p>
+          
+          <div class="features-grid">
+            <div class="feature-item">
+              <div class="feature-icon">🏗️</div>
+              <div class="feature-title">Eigene Grundstücke</div>
+              <div class="feature-text">Baue auf deinem eigenen Plot - grenzenlose Möglichkeiten</div>
+            </div>
+            
+            <div class="feature-item">
+              <div class="feature-icon">💰</div>
+              <div class="feature-title">Wirtschaftssystem</div>
+              <div class="feature-text">Verdiene Geld durch Handel und intelligente Investments</div>
+            </div>
+            
+            <div class="feature-item">
+              <div class="feature-icon">🛒</div>
+              <div class="feature-title">Spieler-Shops</div>
+              <div class="feature-text">Eröffne deinen eigenen Shop und verkaufe Items</div>
+            </div>
+            
+            <div class="feature-item">
+              <div class="feature-icon">🎨</div>
+              <div class="feature-title">Freie Kreativität</div>
+              <div class="feature-text">Von modernen Wolkenkratzern bis zu Fantasy-Schlössern</div>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <div class="highlight-title">
+              <span>🤝</span> Community-Projekte
+            </div>
+            <div class="highlight-text">
+              Arbeite mit anderen Spielern an großen Gemeinschaftsprojekten! Gemeinsam könnt ihr beeindruckende Stadtteile, Shopping-Distrikte oder Freizeitparks erschaffen.
+            </div>
+          </div>
+
+          <div class="stats-row">
+            <div class="stat-box">
+              <div class="stat-number">ca. 830</div>
+              <div class="stat-label">Blöcke</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-number">100%</div>
+              <div class="stat-label">Kreativität</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-number">24/7</div>
+              <div class="stat-label">Griefschutz</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Party Games -->
+    <div class="mode-section">
+      <div class="mode-card">
+        <div class="mode-header">
+          <div class="mode-bg"></div>
+          <div class="mode-icon-large">🎉</div>
+        </div>
+        <div class="mode-content">
+          <h2 class="mode-title">Party Games</h2>
+          <p class="mode-description">
+            Wechselnde Minigames für maximalen Spaß! Von Jump'n'Run über Puzzle bis zu Geschicklichkeitsspielen - hier wird es nie langweilig. Perfekt für schnelle Runden mit Freunden oder um neue Leute kennenzulernen.
+          </p>
+          
+          <div class="features-grid">
+            <div class="feature-item">
+              <div class="feature-icon">🎮</div>
+              <div class="feature-title">Vielfältige Games</div>
+              <div class="feature-text">Verschiedenste Minigames für jeden Geschmack</div>
+            </div>
+            
+            <div class="feature-item">
+              <div class="feature-icon">👥</div>
+              <div class="feature-title">Party-Modus</div>
+              <div class="feature-text">Spiele mit Freunden in privaten oder öffentlichen Lobbys</div>
+            </div>
+            
+            <div class="feature-item">
+              <div class="feature-icon">🏅</div>
+              <div class="feature-title">Bestenlisten</div>
+              <div class="feature-text">Zeig allen, dass du der Beste bist</div>
+            </div>
+            
+            <div class="feature-item">
+              <div class="feature-icon">✨</div>
+              <div class="feature-title">Kosmetische Belohnungen</div>
+              <div class="feature-text">Schalte coole Cosmetics durch Siege frei</div>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <div class="highlight-title">
+              <span>🎯</span> Wöchentlich neue Games
+            </div>
+            <div class="highlight-text">
+              Langweilig wird es nie! Wir fügen regelmäßig neue Minigames hinzu und rotieren zwischen verschiedenen Modi. Von Klassikern bis zu einzigartigen Custom-Games ist alles dabei.
+            </div>
+          </div>
+
+          <div class="stats-row">
+            <div class="stat-box">
+              <div class="stat-number">20+</div>
+              <div class="stat-label">Minigames</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-number">∞</div>
+              <div class="stat-label">Spaß</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-number">2-16</div>
+              <div class="stat-label">Spieler/Runde</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Events -->
+    <div class="mode-section">
+      <div class="mode-card">
+        <div class="mode-header">
+          <div class="mode-bg"></div>
+          <div class="mode-icon-large">🎮</div>
+        </div>
+        <div class="mode-content">
+          <h2 class="mode-title">SoftAttack Event</h2>
+          <p class="mode-description">
+            Unser zeitlich begrenztes Craftattack-Event! Erlebe Minecraft Survival wie nie zuvor - mit Proximity Voice Chat, Community-Projekten und authentischem Vanilla+ Gameplay. Ein soziales Erlebnis, das dich mit anderen Spielern verbindet.
+          </p>
+          
+          <div class="features-grid">
+            <div class="feature-item">
+              <div class="feature-icon">🎙️</div>
+              <div class="feature-title">Voice Chat</div>
+              <div class="feature-text">Sprich mit Spielern in deiner Nähe - für echte Immersion</div>
+            </div>
+            
+            <div class="feature-item">
+              <div class="feature-icon">🌲</div>
+              <div class="feature-title">Vanilla+ Survival</div>
+              <div class="feature-text">Authentisches Minecraft mit kleinen Quality-of-Life Verbesserungen</div>
+            </div>
+            
+            <div class="feature-item">
+              <div class="feature-icon">🏘️</div>
+              <div class="feature-title">Community-Projekte</div>
+              <div class="feature-text">Baue gemeinsam an großen Projekten mit anderen</div>
+            </div>
+            
+            <div class="feature-item">
+              <div class="feature-icon">🛍️</div>
+              <div class="feature-title">Shopping District</div>
+              <div class="feature-text">Handel mit anderen Spielern im Shopping-Viertel</div>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <div class="highlight-title">
+              <span>⏰</span> Zeitlich begrenzt
+            </div>
+            <div class="highlight-text">
+              SoftAttack ist ein temporäres Event, das für begrenzte Zeit verfügbar ist. Nutze die Chance und sei dabei, wenn unsere Community zusammenkommt um unvergessliche Momente zu erleben! Regelmäßig gibt es neue Events und Herausforderungen.
+            </div>
+          </div>
+
+          <div class="highlight-box" style="margin-top:16px;background:linear-gradient(135deg, rgba(16,185,129,0.15), rgba(5,150,105,0.1));border-color:rgba(16,185,129,0.3)">
+            <div class="highlight-title" style="color:#10b981">
+              <span>🎉</span> Weitere Events in Planung
+            </div>
+            <div class="highlight-text">
+              Giveaways, Community-Turniere und saisonale Events - bleib auf dem Discord, um nichts zu verpassen!
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-box">
+      <div class="cta-title">Bereit loszulegen?</div>
+      <div class="cta-text">
+        Egal ob du ein erfahrener PvP-Spieler, kreativer Baumeister oder Party-Game Fan bist - auf SoftPride findest du deinen Platz!
+      </div>
+      <div class="btn-group">
+        <a href="index.html" class="btn btn-primary">
+          <span>🎮</span> Zum Server
+        </a>
+        <a href="https://discord.gg/pbabbVzAfg" class="btn btn-secondary" target="_blank">
+          <span>💬</span> Discord beitreten
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
