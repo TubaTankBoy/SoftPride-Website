@@ -1,0 +1,630 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Rang-Rechte - SoftPride Network</title>
+  <meta name="description" content="Übersicht aller Extra-Rechte für Premium, VIP, Legende, Streamer, Sculk und Allay Ränge">
+  <link rel="icon" href="assets/logo.png">
+  <style>
+    :root{
+      --accent:#1fb6ff;
+      --accent2:#0066cc;
+      --bg:#071428;
+      --muted:#b9d3ee;
+      --card-bg:rgba(255,255,255,0.03);
+    }
+    
+    @keyframes fadeInUp {
+      from { opacity:0; transform:translateY(20px) }
+      to { opacity:1; transform:translateY(0) }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform:translateY(0) }
+      50% { transform:translateY(-10px) }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity:1 }
+      50% { opacity:0.6 }
+    }
+    
+    *{box-sizing:border-box; margin:0; padding:0}
+    
+    body{
+      font-family:Inter,Segoe UI,Arial,sans-serif;
+      background:#071428;
+      color:#eaf4ff;
+      line-height:1.6;
+    }
+    
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:20px 40px;
+      background:rgba(0,0,0,0.3);
+      backdrop-filter:blur(12px);
+      position:sticky;
+      top:0;
+      z-index:100;
+      border-bottom:1px solid rgba(255,255,255,0.05);
+    }
+    
+    .brand{
+      display:flex;
+      gap:14px;
+      align-items:center;
+      animation:fadeInUp 0.6s ease;
+    }
+    
+    .logo{
+      width:56px;
+      height:56px;
+      border-radius:14px;
+      overflow:hidden;
+      box-shadow:0 8px 30px rgba(31,182,255,0.3);
+      transition:transform 0.3s ease;
+    }
+    
+    .logo:hover{
+      transform:scale(1.05) rotate(2deg);
+    }
+    
+    .logo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+    
+    nav a{
+      color:var(--muted);
+      margin-left:24px;
+      text-decoration:none;
+      font-weight:600;
+      font-size:15px;
+      transition:color 0.3s ease;
+      position:relative;
+    }
+    
+    nav a:hover{
+      color:var(--accent);
+    }
+    
+    nav a::after{
+      content:'';
+      position:absolute;
+      bottom:-4px;
+      left:0;
+      width:0;
+      height:2px;
+      background:var(--accent);
+      transition:width 0.3s ease;
+    }
+    
+    nav a:hover::after{
+      width:100%;
+    }
+    
+    nav a.cta{
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      padding:10px 20px;
+      border-radius:12px;
+      color:white;
+      box-shadow:0 4px 15px rgba(31,182,255,0.3);
+      transition:all 0.3s ease;
+    }
+    
+    nav a.cta::after{display:none}
+    
+    nav a.cta:hover{
+      transform:translateY(-2px);
+      box-shadow:0 6px 20px rgba(31,182,255,0.5);
+    }
+
+    .container{
+      max-width:1400px;
+      margin:0 auto;
+      padding:60px 40px;
+    }
+
+    .page-header{
+      text-align:center;
+      margin-bottom:60px;
+      animation:fadeInUp 0.8s ease;
+    }
+
+    .page-title{
+      font-size:48px;
+      font-weight:900;
+      margin-bottom:16px;
+      background:linear-gradient(135deg,#fff,var(--accent));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    .page-subtitle{
+      font-size:18px;
+      color:var(--muted);
+    }
+
+    .ranks-container{
+      background:var(--card-bg);
+      border:1px solid rgba(255,255,255,0.05);
+      border-radius:16px;
+      overflow:hidden;
+      animation:fadeInUp 0.6s ease;
+    }
+
+    .ranks-header{
+      display:grid;
+      grid-template-columns:300px repeat(6, 1fr);
+      gap:1px;
+      background:rgba(255,255,255,0.05);
+    }
+
+    .header-cell{
+      padding:24px 16px;
+      text-align:center;
+      background:rgba(0,0,0,0.3);
+      font-weight:800;
+      font-size:18px;
+    }
+
+    .header-cell.features{
+      text-align:left;
+      padding-left:32px;
+    }
+
+    .rank-spieler-header{
+      background:linear-gradient(135deg, rgba(128,128,128,0.15), rgba(96,96,96,0.15));
+      color:#AAAAAA;
+    }
+
+    .rank-premium-header{
+      background:linear-gradient(135deg, rgba(255,215,0,0.15), rgba(255,165,0,0.15));
+      color:#FFD700;
+    }
+
+    .rank-vip-header{
+      background:linear-gradient(135deg, rgba(138,43,226,0.15), rgba(75,0,130,0.15));
+      color:#8A2BE2;
+    }
+
+    .rank-legende-header{
+      background:linear-gradient(135deg, rgba(255,0,0,0.15), rgba(139,0,0,0.15));
+      color:#FF4444;
+    }
+
+    .rank-sculk-header{
+      background:linear-gradient(135deg, rgba(0,128,128,0.15), rgba(0,100,100,0.15));
+      color:#00CED1;
+    }
+
+    .rank-allay-header{
+      background:linear-gradient(135deg, rgba(100,149,237,0.15), rgba(65,105,225,0.15));
+      color:#6495ED;
+    }
+
+    .section-divider{
+      display:grid;
+      grid-template-columns:300px repeat(6, 1fr);
+      gap:1px;
+      background:rgba(255,255,255,0.05);
+    }
+
+    .section-title-cell{
+      padding:16px 32px;
+      background:rgba(0,0,0,0.4);
+      font-weight:700;
+      font-size:16px;
+      text-transform:uppercase;
+      letter-spacing:1px;
+      color:var(--accent);
+      grid-column:1 / -1;
+    }
+
+    .feature-row{
+      display:grid;
+      grid-template-columns:300px repeat(6, 1fr);
+      gap:1px;
+      background:rgba(255,255,255,0.05);
+      transition:background 0.2s ease;
+    }
+
+    .feature-row:hover{
+      background:rgba(255,255,255,0.08);
+    }
+
+    .feature-name-cell{
+      padding:20px 32px;
+      background:rgba(0,0,0,0.2);
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+
+    .feature-name{
+      font-weight:600;
+      font-size:15px;
+      color:#fff;
+    }
+
+    .feature-description{
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .feature-check-cell{
+      padding:20px 16px;
+      background:rgba(0,0,0,0.2);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .checkmark{
+      width:28px;
+      height:28px;
+      border-radius:50%;
+      background:#10b981;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:white;
+      font-weight:bold;
+      font-size:18px;
+    }
+
+    .number-only{
+      color:#10b981;
+      font-weight:bold;
+      font-size:20px;
+    }
+
+    .empty-cell{
+      opacity:0.2;
+      font-size:18px;
+      color:#555;
+    }
+
+    .no-check{
+      opacity:0;
+    }
+
+    footer{
+      background:rgba(0,0,0,0.3);
+      padding:40px;
+      text-align:center;
+      color:var(--muted);
+      border-top:1px solid rgba(255,255,255,0.05);
+    }
+    
+    footer a{
+      color:var(--accent);
+      text-decoration:none;
+    }
+    
+    footer a:hover{
+      text-decoration:underline;
+    }
+
+    @media(max-width:768px){
+      .page-title{font-size:32px}
+      .ranks-header, .feature-row, .section-divider{
+        display:block;
+      }
+      .header-cell{
+        display:inline-block;
+        padding:12px;
+        margin:4px;
+        border-radius:8px;
+      }
+      .header-cell.features{
+        display:none;
+      }
+      .section-title-cell{
+        border-radius:8px;
+        margin-bottom:8px;
+      }
+      .feature-name-cell{
+        border-radius:8px 8px 0 0;
+      }
+      .feature-check-cell{
+        display:inline-block;
+        width:calc(20% - 2px);
+        padding:12px 8px;
+      }
+      .feature-check-cell:last-child{
+        border-radius:0 0 8px 8px;
+      }
+      .feature-row{
+        margin-bottom:12px;
+        border-radius:8px;
+      }
+      nav{display:none}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">
+        <img src="https://cdn.discordapp.com/attachments/1133838585209041046/1433910868373934200/image.png?ex=69119dcf&is=69104c4f&hm=b07e72f84911d907d2bd4e3ed1b9d9e54dc31d4213baf329f317a7ea9417211e&" alt="SoftPride">
+      </div>
+      <div>
+        <div style="font-weight:800;font-size:18px">SoftPride</div>
+        <div style="font-size:12px;color:var(--muted)">Minecraft Network</div>
+      </div>
+    </div>
+    <nav>
+      <a href="index.html">Start</a>
+      <a href="rang-rechte.html">Rang-Rechte</a>
+      <a href="about.html">Über uns</a>
+      <a href="modes.html">Spielmodi</a>
+      <a href="contact.html">Kontakt</a>
+      <a class="cta" href="donate.html">💎 Spenden</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="page-header">
+      <h1 class="page-title">⭐ Rang-Rechte</h1>
+      <p class="page-subtitle">Übersicht aller Extra-Rechte und Features für unsere Premium-Ränge</p>
+    </div>
+
+    <div class="ranks-container">
+      <!-- Header Row -->
+      <div class="ranks-header">
+        <div class="header-cell features">Features</div>
+        <div class="header-cell rank-spieler-header">Spieler</div>
+        <div class="header-cell rank-premium-header">Premium</div>
+        <div class="header-cell rank-vip-header">VIP</div>
+        <div class="header-cell rank-legende-header">Legende</div>
+        <div class="header-cell rank-sculk-header">Sculk</div>
+        <div class="header-cell rank-allay-header">Allay</div>
+      </div>
+
+      <!-- Allgemeine Features Section -->
+      <div class="section-divider">
+        <div class="section-title-cell">Allgemeine Features</div>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-name-cell">
+          <div class="feature-name">Prefix (InGame/Discord)</div>
+          <div class="feature-description">Zeige deinen Rang-Prefix im Spiel und auf Discord</div>
+        </div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-name-cell">
+          <div class="feature-name">Bonus-Booster (Wöchentlich Abholbar)</div>
+          <div class="feature-description">Nutze spezielle Bonus-Booster auf CityBuild</div>
+        </div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+      </div>
+
+      <!-- CityBuild Features Section -->
+      <div class="section-divider">
+        <div class="section-title-cell">CityBuild Features</div>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-name-cell">
+          <div class="feature-name">Farbige Amboss-Texte</div>
+          <div class="feature-description">Erstelle farbige Namen auf Ambossen (CityBuild)</div>
+        </div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-name-cell">
+          <div class="feature-name">Grundstücke</div>
+          <div class="feature-description">Maximale Anzahl an Plots die du besitzen kannst (CityBuild)</div>
+        </div>
+        <div class="feature-check-cell"><div class="number-only">2</div></div>
+        <div class="feature-check-cell"><div class="number-only">3</div></div>
+        <div class="feature-check-cell"><div class="number-only">4</div></div>
+        <div class="feature-check-cell"><div class="number-only">5</div></div>
+        <div class="feature-check-cell"><div class="number-only">10</div></div>
+        <div class="feature-check-cell"><div class="number-only">11</div></div>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-name-cell">
+          <div class="feature-name">Homes</div>
+          <div class="feature-description">Maximale Anzahl an Home-Punkten die du setzen kannst (CityBuild)</div>
+        </div>
+        <div class="feature-check-cell"><div class="number-only">2</div></div>
+        <div class="feature-check-cell"><div class="number-only">3</div></div>
+        <div class="feature-check-cell"><div class="number-only">4</div></div>
+        <div class="feature-check-cell"><div class="number-only">5</div></div>
+        <div class="feature-check-cell"><div class="number-only">10</div></div>
+        <div class="feature-check-cell"><div class="number-only">15</div></div>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-name-cell">
+          <div class="feature-name">Spieler-Köpfe</div>
+          <div class="feature-description">Erhalte Spieler-Köpfe zur Dekoration (CityBuild)</div>
+        </div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-name-cell">
+          <div class="feature-name">Mute-Rechte</div>
+          <div class="feature-description">Spieler temporär muten (CityBuild)</div>
+        </div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-name-cell">
+          <div class="feature-name">Startkick</div>
+          <div class="feature-description">Spieler vom Plot kicken (CityBuild)</div>
+        </div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-name-cell">
+          <div class="feature-name">Join-Status</div>
+          <div class="feature-description">Server-Informationen beim Betreten anzeigen (CityBuild)</div>
+        </div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-name-cell">
+          <div class="feature-name">Chat löschen</div>
+          <div class="feature-description">Lösche den gesamten Chat (CityBuild)</div>
+        </div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-name-cell">
+          <div class="feature-name">Slow-Chat</div>
+          <div class="feature-description">Aktiviere einen verzögerten Chat (CityBuild)</div>
+        </div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-name-cell">
+          <div class="feature-name">Fly-Rechte</div>
+          <div class="feature-description">Fliege auf CityBuild und in der Lobby</div>
+        </div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-name-cell">
+          <div class="feature-name">Vanish-Modus</div>
+          <div class="feature-description">Werde unsichtbar auf CityBuild und in der Lobby</div>
+        </div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-name-cell">
+          <div class="feature-name">Warp-Bypass</div>
+          <div class="feature-description">Umgehe Warp-Cooldowns und Countdowns (CityBuild)</div>
+        </div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+      </div>
+
+      <!-- Befehle Section -->
+      <div class="section-divider">
+        <div class="section-title-cell">Befehle</div>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-name-cell">
+          <div class="feature-name">/craft</div>
+          <div class="feature-description">Öffne eine Werkbank von überall (CityBuild)</div>
+        </div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-name-cell">
+          <div class="feature-name">/rename</div>
+          <div class="feature-description">Benenne Items um (CityBuild)</div>
+        </div>
+        <div class="feature-check-cell"><div class="empty-cell">-</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+        <div class="feature-check-cell"><div class="checkmark">✓</div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div style="font-size:18px;font-weight:700;margin-bottom:16px">SoftPride Network</div>
+    <div style="margin-bottom:24px">
+      <a href="https://discord.gg/pbabbVzAfg" target="_blank">Discord</a> • 
+      <a href="#rules">Regeln</a> • 
+      <a href="#impressum">Impressum</a> • 
+      <a href="#datenschutz">Datenschutz</a>
+    </div>
+    <p>© 2025 SoftPride - Alle Rechte vorbehalten</p>
+    <p style="margin-top:8px;font-size:14px">
+      Kontakt: <a href="mailto:support@softpride.de">support@softpride.de</a>
+    </p>
+  </footer>
+</body>
+</html>
